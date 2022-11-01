@@ -7,15 +7,16 @@ for item in warehouse1:
     # The `item` name will contain each of the strings (item names) in the list.
 """
 
+from ast import Compare
 from re import S
 from data import warehouse1, warehouse2
 import time
 
 
 # YOUR CODE STARTS HERE
-print('')
+print('---------------------------------')
 print('WMS - Warehouse Management System')
-print('-')
+print('---------------------------------')
 
 
 # Get the user name
@@ -27,13 +28,13 @@ print('Hello',user_name,', Welcome to our Warehouse!')
 print('')
 
 time.sleep(0.2)
-print('loading..')
+print('  .')
 
 time.sleep(0.3)
-print('loading..')
+print(' ...')
 
 time.sleep(0.4)
-print('loading..')
+print('.....')
 
 app_running = True
 while app_running == True:
@@ -41,17 +42,17 @@ while app_running == True:
     # Show the menu and ask to pick a choice
     print('\n\n',user_name,', Please choose an option : \n 1. List items by warehouse \n 2. Search an item and place an order \n 3. Quit \n\n' )
     menu = int(input('Please enter 1, 2 or 3 : '))
-
+    
     print('')
 
-    time.sleep(0.2)
-    print('loading..')
-
     time.sleep(0.3)
-    print('loading..')
+    print('  ~')
 
     time.sleep(0.4)
-    print('loading..')
+    print(' ~~~')
+
+    time.sleep(0.5)
+    print('~~~~~')
 
     print('')
 
@@ -60,25 +61,26 @@ while app_running == True:
     if menu ==1:
         print('Items in WAREHOUSE 1: ')
         for i in warehouse1:
-            print(i)
+            print('~',i)
         print('Items in WAREHOUSE 2: ')
         for i in warehouse2:
-            print(i)
+            print('~',i)
 
     # Else, if they pick 2
     elif menu ==2:
         items_in_warehouse1= 0
         items_in_warehouse2= 0
 
-        item=str.capitalize(input('Choose an item you like: '))  #
+        item=str.capitalize(input('Choose an item you like: '))  
         if item in warehouse1 or item in warehouse2:
-            print('You selected :', item, '\n Item found!')
+            print('---')
+            print('You selected :', item, '\nItem found!')
             for i in warehouse1:
                     if i.upper() == item.upper():
                         items_in_warehouse1 += 1
             for i in warehouse2:
                     if i.upper() == item.upper():
-                        items_in_warehouse1 += 1
+                        items_in_warehouse2 += 1
 
             print('Total of', items_in_warehouse1+items_in_warehouse2,' items were found in our warehouses.')
             print ('We have ',items_in_warehouse1,' items available in Warehouse1')
@@ -86,50 +88,62 @@ while app_running == True:
 
 
             if items_in_warehouse1 > items_in_warehouse2:
+                print('')
                 print('Warehouse1 has a larger stock')
             elif items_in_warehouse1 < items_in_warehouse2:
+                print('')
                 print('Warehouse2 has a larger stock')
             else:
+                print('')
                 print('Both our warehouses have an equal stock.')
 
-            number_of_items = int(input('Please enter the total number of items you want to order: '))
-            print('User input: ',number_of_items)
-            print(number_of_items <= items_in_warehouse1 + items_in_warehouse2)
+            order = input ('Do you want to place an order?\nType y / n --  ')
             
+            time.sleep(0.2)
+            print('  *')
+
+            time.sleep(0.3)
+            print(' ***')
+
+            time.sleep(0.4)
+            print('*****')
 
 
-            if number_of_items > items_in_warehouse1 + items_in_warehouse2:
-                print('Sorry, we have only', items_in_warehouse1+items_in_warehouse2,'items available.\nDo you want to order the maximum number of items available?')
 
+            if order == 'y':
+                number_of_items = int(input('Please enter the total number of items you want to order: '))
+                #print('User input: ',number_of_items)
                 
-                if number_of_items <= items_in_warehouse1 + items_in_warehouse2:
-                buying_decision = input('Please type y to checkout or n to exit : ')
+                if number_of_items <= items_in_warehouse1+items_in_warehouse2:
+                    print('--Order placed for--\nItem:',item,'\nTotal number ordered: ',number_of_items)
 
-                if buying_decision == 'y':
-                    print('Purchase successful!')
+                elif number_of_items > items_in_warehouse1 + items_in_warehouse2:
+                    print ('Sorry, we have only ',items_in_warehouse1+items_in_warehouse2,' items available.\nYou may order the maximum available instead.')
                     
-                elif buying_decision == 'n':
-                    print('Sorry, Do you want to buy something else?')
-                elif buying_decision != 'y' or buying_decision != 'n':
-                    print('ERROR!! Please type: y or n')
-                else:
-                    print('Sorry, item not found.')
-                    
-                
-            
+                    max_order = input('Would you like to order the maximum available? y / n --  ')
+                    if max_order == 'y':
+                        print('-----')
+                        print('Order placed for:\nItem:',item,'\nTotal number ordered: ',items_in_warehouse1+items_in_warehouse2)
+                    else:
+                        print('Please check out our warehouses for other items that you might like.')
+
+            elif order == 'n':
+                print('Thank you for your visit, ', user_name,'. See you again!')
+
+        
+        else:
+            print('')
+            print('ERROR : No such item found!')
 
     # Else, if they pick 3
     elif menu ==3:
         print('Thank you for your visit,',user_name,'. See you again!')
         app_running = False
+    
+    else:
+        print(menu,' is not a valid operation')
+        
 
-    # Else
+#print('Thank you for your visit, ',user_name)
 
     # Thank the user for the visit
-
-    """ if buying_decision == 'y':
-        print('Purchase successful!')
-    elif buying_decision == 'n':
-        print('Sorry, please visit us again')
-    elif buying_decision != 'y' or buying_decision != 'n':
-                print('ERROR!! Please type: y or n') """
