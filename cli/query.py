@@ -41,8 +41,13 @@ while app_running == True:
 
     # Show the menu and ask to pick a choice
     print('\n\n',user_name,', Please choose an option : \n 1. List items by warehouse \n 2. Search an item and place an order \n 3. Quit \n\n' )
-    menu = int(input('Please enter 1, 2 or 3 : '))
+    menu = input('Please enter 1, 2 or 3 : ')
+
+    while not menu.isnumeric():
+        menu = input('Wrong type!! Please enter 1,2 or 3. ')
     
+    menu = int(menu)
+
     print('')
 
     time.sleep(0.3)
