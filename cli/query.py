@@ -6,14 +6,14 @@ for item in warehouse1:
     # Your instructions here.
     # The `item` name will contain each of the strings (item names) in the list.
 """
-
-from ast import Compare
-from re import S
 from data import warehouse1, warehouse2
+from art import *
 import time
+import os
 
 
 # YOUR CODE STARTS HERE
+tprint('Viona.Inc')
 print('---------------------------------')
 print('WMS - Warehouse Management System')
 print('---------------------------------')
@@ -21,6 +21,7 @@ print('---------------------------------')
 
 # Get the user name
 user_name = input('Please enter your name : ')
+user_name = user_name.capitalize()
 
 
 # Greet the user
@@ -65,9 +66,12 @@ while app_running == True:
     # If they pick 1
     if menu ==1:
         print('Items in WAREHOUSE 1: ')
+        print('--------------------')
         for i in warehouse1:
             print('~',i)
+        print('')
         print('Items in WAREHOUSE 2: ')
+        print('--------------------')
         for i in warehouse2:
             print('~',i)
 
@@ -129,11 +133,15 @@ while app_running == True:
                     if max_order == 'y':
                         print('-----')
                         print('Order placed for:\nItem:',item,'\nTotal number ordered: ',items_in_warehouse1+items_in_warehouse2)
-                    else:
+                    elif max_order == 'n':
                         print('Please check out our warehouses for other items that you might like.')
+                    else:
+                        print('Incorrect entry, please type y / n : ')
 
             elif order == 'n':
                 print('Thank you for your visit, ', user_name,'. See you again!')
+            else:
+                print('Incorrect entry! Please type y / n : ')
 
         
         else:
