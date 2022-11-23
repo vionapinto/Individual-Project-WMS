@@ -42,12 +42,12 @@ while app_running == True:
 
     # Show the menu and ask to pick a choice
     print('\n\n',user_name,', Please choose an option : \n 1. List items by warehouse \n 2. Search an item and place an order \n 3. Quit \n\n' )
-    menu = input('Please enter 1, 2 or 3 : ')
+    menu_str = input('Please enter 1, 2 or 3 : ')
 
-    while not menu.isnumeric():
-        menu = input('Wrong type!! Please enter 1,2 or 3. ')
+    while not menu_str.isnumeric():
+        menu_str = input('Wrong type!! Please enter 1,2 or 3: ')
     
-    menu = int(menu)
+    menu = int(menu_str)
 
     print('')
 
@@ -61,10 +61,7 @@ while app_running == True:
     print('~~~~~')
 
     print('')
-
-
-    # If they pick 1
-    if menu ==1:
+    def menu_1():
         print('Items in WAREHOUSE 1: ')
         print('--------------------')
         for i in warehouse1:
@@ -74,23 +71,21 @@ while app_running == True:
         print('--------------------')
         for i in warehouse2:
             print('~',i)
-
-    # Else, if they pick 2
-    elif menu ==2:
+    
+    def menu_2():
         items_in_warehouse1= 0
         items_in_warehouse2= 0
 
-        item=str.capitalize(input('Choose an item you like: '))  
+        item = str.capitalize(input('Choose an item you like: '))      
         if item in warehouse1 or item in warehouse2:
+            for x in warehouse1:
+                if item == x:
+                    items_in_warehouse1 += 1
+            for x in warehouse2:
+                if item == x:
+                    items_in_warehouse2 += 1
             print('---')
             print('You selected :', item, '\nItem found!')
-            for i in warehouse1:
-                    if i.upper() == item.upper():
-                        items_in_warehouse1 += 1
-            for i in warehouse2:
-                    if i.upper() == item.upper():
-                        items_in_warehouse2 += 1
-
             print('Total of', items_in_warehouse1+items_in_warehouse2,' items were found in our warehouses.')
             print ('We have ',items_in_warehouse1,' items available in Warehouse1')
             print ('We have ',items_in_warehouse2,' items available in Warehouse2')
@@ -147,6 +142,14 @@ while app_running == True:
         else:
             print('')
             print('ERROR : No such item found!')
+
+    # If they pick 1
+    if menu ==1:
+        menu_1()
+
+    # Else, if they pick 2
+    elif menu ==2:
+        menu_2()
 
     # Else, if they pick 3
     elif menu ==3:
