@@ -62,15 +62,32 @@ while app_running == True:
 
     print('')
     def menu_1():
-        print('Items in WAREHOUSE 1: ')
-        print('--------------------')
-        for i in warehouse1:
-            print('~',i)
-        print('')
-        print('Items in WAREHOUSE 2: ')
-        print('--------------------')
-        for i in warehouse2:
-            print('~',i)
+        def filter_data(key,value):
+            result = []
+            for item in stock:
+                if item[key] == value:
+                    result.append(item)
+            return result
+
+        warehouse1 = filter_data('warehouse',1)
+        for item in warehouse1:
+            #print(filter_data('category',item['category']))
+            print('---')
+            print(' ')
+            print('Item:----',item['category'])
+            ## no of items
+            print('total items of in warehouse1', len(filter_data('category',item['category'])))
+
+            #print('~',item)
+            #print(item['category'])
+
+        warehouse2 = filter_data('warehouse',2)
+        for item in warehouse2:
+            pass
+            #print(filter_data('category',item['category']))
+            #print('~',item)
+            #print(item['category'])
+
     
     def menu_2():
         items_in_warehouse1= 0
@@ -170,3 +187,15 @@ while app_running == True:
 
 # state, category, warehouse, date of stock
 
+def filter_data(key,value):
+    result = []
+    for item in stock:
+        if item[key] == value:
+            result.append(item)
+    return result
+
+warehouse1 = filter_data('warehouse',1)
+print(warehouse1)
+
+warehouse2 = filter_data('warehouse',2)
+print(warehouse2)
