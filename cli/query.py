@@ -6,7 +6,7 @@ for item in warehouse1:
     # Your instructions here.
     # The `item` name will contain each of the strings (item names) in the list.
 """
-from data import warehouse1, warehouse2
+from data import stock
 from art import *
 import time
 import os
@@ -163,3 +163,10 @@ while app_running == True:
 #print('Thank you for your visit, ',user_name)
 
     # Thank the user for the visit
+
+
+
+# the different sections in 'stock'--data.py
+
+# state, category, warehouse, date of stock
+
