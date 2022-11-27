@@ -1,18 +1,10 @@
-"""Command line interface to query the stock.
 
-To iterate the source data you can use the following structure:
-
-for item in warehouse1:
-    # Your instructions here.
-    # The `item` name will contain each of the strings (item names) in the list.
-"""
 from data import stock
 from art import *
 import time
 import os
+import datetime
 
-
-# YOUR CODE STARTS HERE
 tprint('Viona.Inc')
 print('---------------------------------')
 print('WMS - Warehouse Management System')
@@ -41,11 +33,11 @@ app_running = True
 while app_running == True:
 
     # Show the menu and ask to pick a choice
-    print('\n\n',user_name,', Please choose an option : \n 1. List items by warehouse \n 2. Search an item and place an order \n 3. Quit \n\n' )
+    print('\n\n',user_name,', Please choose an option : \n 1. List items by warehouse \n 2. Search an item and place an order \n 3. Browse by category \n 4. Quit \n\n' )
     menu_str = input('Please enter 1, 2 or 3 : ')
 
     while not menu_str.isnumeric():
-        menu_str = input('Wrong type!! Please enter 1,2 or 3: ')
+        menu_str = input('Wrong type!! Please enter 1,2,3 or 4: ')
     
     menu = int(menu_str)
 
@@ -62,6 +54,23 @@ while app_running == True:
 
     print('')
     def menu_1():
+        if menu == 1:
+            """ print('--Warehouse 1--')
+            total_items1 = []
+            for i in stock:
+                if i['warehouse'] == 1:
+                    total_items1.append(i)
+                    print(f"{total_items1.index(i)+1}){i['state']} {i['category']}")
+            print('Total items in Warehouse 1 are: ', len(total_items1))
+            print('')
+            print('--Warehouse 2--')
+            total_items2 = []
+            for i in stock:
+                if i['warehouse'] == 2:
+                    total_items2.append(i)
+                    print(f"{total_items2.index(i)+1}){i['state']} {i['category']}")
+            print('Total items in Warehouse 1 are: ', len(total_items2))
+ """
         def filter_data(key,value):
             result = []
             for item in stock:
@@ -74,81 +83,98 @@ while app_running == True:
             #print(filter_data('category',item['category']))
             print('---')
             print(' ')
-            print('Item:----',item['category'])
-            ## no of items
-            print('total items of in warehouse1', len(filter_data('category',item['category'])))
-
-            #print('~',item)
-            #print(item['category'])
+            print('Item:----',item['category'])       
+            print('total items in warehouse 1', len(filter_data('category',item['category'])))   ## no of items
 
         warehouse2 = filter_data('warehouse',2)
         for item in warehouse2:
-            pass
-            #print(filter_data('category',item['category']))
-            #print('~',item)
-            #print(item['category'])
-
-    
-    def menu_2():
-        items_in_warehouse1= 0
-        items_in_warehouse2= 0
-
-        item = str.capitalize(input('Choose an item you like: '))      
-        if item in warehouse1 or item in warehouse2:
-            for x in warehouse1:
-                if item == x:
-                    items_in_warehouse1 += 1
-            for x in warehouse2:
-                if item == x:
-                    items_in_warehouse2 += 1
             print('---')
-            print('You selected :', item, '\nItem found!')
-            print('Total of', items_in_warehouse1+items_in_warehouse2,' items were found in our warehouses.')
-            print ('We have ',items_in_warehouse1,' items available in Warehouse1')
-            print ('We have ',items_in_warehouse2,' items available in Warehouse2')
+            print(' ')
+            print('Item:----',item['category'])       
+            print('total items in warehouse 2', len(filter_data('category',item['category'])))   ## no of items
+
+############################### -----------------------MENU 2 BEGINS HERE!!!--------------#######################################
+    def menu_2():
+        os.system("clear")
+        #items_in_warehouse1= 0
+        #items_in_warehouse2= 0
+        def filter_data(key,value):
+            result = []
+            for item in stock:
+                if item[key] == value:
+                    result.append(item)
+            return result
+        warehouse1 = filter_data('warehouse',1)
+        warehouse2 = filter_data('warehouse',2)
+
+        item_name = str.capitalize(input('Choose an item you like: '))
+        #if item in warehouse1 or item in warehouse2:
+        for item in stock:
+            for item in warehouse1:
+                if item['state'] in item_name and item['category'] in item_name:
+                    items_in_warehouse1 = len(filter_data('category',item['category']))
+                    print ('We have ',items_in_warehouse1,' items available in Warehouse 1')
+                    print('LOCATION:')
+                    delta = datetime.datetime.now() - datetime.datetime.strptime(item["date_of_stock"],"%Y-%m-%d %H:%M:%S")
+                    print('Warehouse 1 (in stock for',delta,'days)')
+            for item in warehouse2:       
+                if item['state'] in item_name and item['category'] in item_name:
+                    items_in_warehouse2 = len(filter_data('category',item['category']))
+                    print ('We have ',items_in_warehouse2,' items available in Warehouse 2')
+                    delta = datetime.datetime.now() - datetime.datetime.strptime(item["date_of_stock"],"%Y-%m-%d %H:%M:%S")
+                    print('Warehouse 1 (in stock for',delta,'days)')
+            # else:
+            #     print('Not in stock')
+ 
+        print('---')
+        print('You selected :', item_name)
+        #print('Total of', items_in_warehouse1+items_in_warehouse2,' items were found in our warehouses.')
+        
+        
 
 
-            if items_in_warehouse1 > items_in_warehouse2:
-                print('')
-                print('Warehouse1 has a larger stock')
-            elif items_in_warehouse1 < items_in_warehouse2:
-                print('')
-                print('Warehouse2 has a larger stock')
-            else:
-                print('')
-                print('Both our warehouses have an equal stock.')
+        # if items_in_warehouse1 > items_in_warehouse2:
+        #     print('')
+        #     print('Warehouse1 has a larger stock')
+        # elif items_in_warehouse1 < items_in_warehouse2:
+        #     print('')
+        #     print('Warehouse2 has a larger stock')
+        # else:
+        #     print('')
+        #     print('Both our warehouses have an equal stock.')
 
-            order = input ('Do you want to place an order?\nType y / n --  ')
+        
+        order = input ('Do you want to place an order?\nType y / n --  ')
             
-            time.sleep(0.2)
-            print('  *')
+        time.sleep(0.2)
+        print('  *')
 
-            time.sleep(0.3)
-            print(' ***')
+        time.sleep(0.3)
+        print(' ***')
 
-            time.sleep(0.4)
-            print('*****')
+        time.sleep(0.4)
+        print('*****')
 
 
 
-            if order == 'y':
-                number_of_items = int(input('Please enter the total number of items you want to order: '))
-                #print('User input: ',number_of_items)
+        if order == 'y':
+            number_of_items = int(input('Please enter the total number of items you want to order: '))
+            #print('User input: ',number_of_items)
+            
+            if number_of_items <= items_in_warehouse1+items_in_warehouse2:
+                print('--Order placed for--\nItem:',item_name,'\nTotal number ordered: ',number_of_items)
+
+            elif number_of_items > items_in_warehouse1 + items_in_warehouse2:
+                print ('Sorry, we have only ',items_in_warehouse1+items_in_warehouse2,' items available.\nYou may order the maximum available instead.')
                 
-                if number_of_items <= items_in_warehouse1+items_in_warehouse2:
-                    print('--Order placed for--\nItem:',item,'\nTotal number ordered: ',number_of_items)
-
-                elif number_of_items > items_in_warehouse1 + items_in_warehouse2:
-                    print ('Sorry, we have only ',items_in_warehouse1+items_in_warehouse2,' items available.\nYou may order the maximum available instead.')
-                    
-                    max_order = input('Would you like to order the maximum available? y / n --  ')
-                    if max_order == 'y':
-                        print('-----')
-                        print('Order placed for:\nItem:',item,'\nTotal number ordered: ',items_in_warehouse1+items_in_warehouse2)
-                    elif max_order == 'n':
-                        print('Please check out our warehouses for other items that you might like.')
-                    else:
-                        print('Incorrect entry, please type y / n : ')
+                max_order = input('Would you like to order the maximum available? y / n --  ')
+                if max_order == 'y':
+                    print('-----')
+                    print('Order placed for:\nItem:',item_name,'\nTotal number ordered: ',items_in_warehouse1+items_in_warehouse2)
+                elif max_order == 'n':
+                    print('Please check out our warehouses for other items that you might like.')
+                else:
+                    print('Incorrect entry, please type y / n : ')
 
             elif order == 'n':
                 print('Thank you for your visit, ', user_name,'. See you again!')
@@ -159,6 +185,12 @@ while app_running == True:
         else:
             print('')
             print('ERROR : No such item found!')
+    
+    def menu_3():
+        pass
+
+
+
 
     # If they pick 1
     if menu ==1:
@@ -168,8 +200,12 @@ while app_running == True:
     elif menu ==2:
         menu_2()
 
-    # Else, if they pick 3
-    elif menu ==3:
+    # If they pick 3
+    elif menu == 3:
+        menu_3()
+
+    # Else, if they pick 4
+    elif menu ==4:
         print('Thank you for your visit,',user_name,'. See you again!')
         app_running = False
     
@@ -187,7 +223,7 @@ while app_running == True:
 
 # state, category, warehouse, date of stock
 
-def filter_data(key,value):
+""" def filter_data(key,value):
     result = []
     for item in stock:
         if item[key] == value:
@@ -198,4 +234,4 @@ warehouse1 = filter_data('warehouse',1)
 print(warehouse1)
 
 warehouse2 = filter_data('warehouse',2)
-print(warehouse2)
+print(warehouse2) """
