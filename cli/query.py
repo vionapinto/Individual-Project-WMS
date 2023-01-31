@@ -49,6 +49,20 @@ def security_check():
            pass      
         else:
             print("Wrong credentials")
+
+# to ask once again if we want to order something else
+def final_decision():
+    opt = input('Do you want to add something else into your cart? Enter y or n:  ')
+    if opt == 'y':
+        search_and_order_item()
+    elif opt == 'n':
+        print('You are not choosing any other item.Thank you.')
+    else:
+        print('please choose y or n')
+        final_decision()
+
+
+
 # Get the user name
 user_name = input('Please enter your name : ')
 user_name = user_name.capitalize()
@@ -139,36 +153,46 @@ while app_running == True:
         print('*****')
 
         if order == 'y':
-            security_check()
-            if "user_name" in user_information and "password" in user_information: 
-                number_of_items = int(input('Please enter the total number of items you want to order: '))
+            while True:
+                security_check()
+                if "user_name" in user_information and "password" in user_information: 
+                    number_of_items = input('Please enter the total number of items you want to order: ')
+                    if number_of_items.isnumeric():
+                        number_of_items_integer = int(number_of_items)
+                        if number_of_items_integer <= total_items_available:
+                            print('--Order placed for--\nItem:', item_name.capitalize(),'\nTotal number ordered: ', number_of_items_integer)
+                            final_decision()
+                            break
+                        elif number_of_items_integer > total_items_available:
+                            print('Sorry, we have only ', total_items_available,
+                                ' items available.\nYou may order the maximum available instead.')
 
-                if number_of_items <= total_items_available:
-                    print('--Order placed for--\nItem:', item_name.capitalize(),'\nTotal number ordered: ', number_of_items)
+                            max_order = input(
+                                'Would you like to order the maximum available? y / n --  ')
+                            if max_order == 'y':
+                                print('-----')
+                                print('Order placed for:\nItem:', item_name,
+                                    '\nTotal number ordered: ', total_items_available)
+                            elif max_order == 'n':
+                                print('There may be other items in our warehouses that you might like.')
+                                final_decision()
+                                break
+                            else:
+                                print('Incorrect entry, please type y / n : ')
 
-                elif number_of_items > total_items_available:
-                    print('Sorry, we have only ', total_items_available,
-                        ' items available.\nYou may order the maximum available instead.')
-
-                    max_order = input(
-                        'Would you like to order the maximum available? y / n --  ')
-                    if max_order == 'y':
-                        print('-----')
-                        print('Order placed for:\nItem:', item_name,
-                            '\nTotal number ordered: ', total_items_available)
-                    elif max_order == 'n':
-                        print('Please check out our warehouses for other items that you might like.')
+                        elif order == 'n':
+                            print('Thank you for your visit, ',user_name, '. See you again!')
+                        else:
+                            print('Incorrect entry! Please type y / n : ')
                     else:
-                        print('Incorrect entry, please type y / n : ')
-
-                elif order == 'n':
-                    print('Thank you for your visit, ',user_name, '. See you again!')
+                        print('!!!')
+                        print("Please enter an integer")
+                        print('!!!')
                 else:
-                    print('Incorrect entry! Please type y / n : ')
-            else:
-                print('!!!!!!!')
-                print('ERROR: User not recognized!')
-                print('!!!!!!!')
+                    print('!!!!!!!')
+                    print('ERROR: User not recognized!')
+                    print('!!!!!!!')
+                    
 
         elif order == 'n':
             pass
@@ -176,8 +200,7 @@ while app_running == True:
         else:
             print('')
             print('ERROR : Incorrect entry! Please type y / n : ')
-
-##################### -- ----------------MENU 3 starts here!!! -----------------------------------------------------------   
+##################### -- ----------------MENU 3 starts here!!!-----------------------------------------------------------   
     
     def browse_by_category():
         os.system("clear")
